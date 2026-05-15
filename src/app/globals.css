@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #C59D5F;
+  --color-primary-hover: #D4AF7A;
+
+  --color-bg-base: #050505;
+  --color-bg-surface: #0B0B0B;
+  --color-bg-card: rgba(255,255,255,0.03);
+
+  --font-sans: var(--font-orbitron), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[#050505] text-white antialiased font-sans overflow-x-hidden;
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C59D5F;
+  border-radius: 999px;
+}
+
+/* Premium selection */
+::selection {
+  background: #C59D5F;
+  color: black;
+}
+
+/* Cinematic glow utilities */
+.gold-glow {
+  box-shadow:
+    0 0 20px rgba(197, 157, 95, 0.25),
+    0 0 60px rgba(197, 157, 95, 0.12);
+}
+
+.text-glow {
+  text-shadow:
+    0 0 10px rgba(197, 157, 95, 0.4);
+}
+
+/* Luxury glass effect */
+.glass-dark {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+}

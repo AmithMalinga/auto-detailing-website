@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ServiceType {
+  DETAILING
+  PPF_WRAPPING
+  CAR_TECH
+  DIAGNOSTICS
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ProductCategory {
+  DETAILING_PRODUCT
+  CAR_TECH
+  ACCESSORY
+}
+
+model Customer {
+  id             String    @id @default(cuid())
+  name           String
+  phone          String    @unique
+  email          String?
+  preferredLang  String    @default("en")
+  membershipTier String?
+  vehicles       Vehicle[]
+  bookings       Booking[]
+  orders         Order[]
+  createdAt      DateTime  @default(now())
+}
+
+model Vehicle {
+  id          String    @id @default(cuid())
+  make        String
+  model       String
+  year        Int
+  color       String
+  plateNumber String?
+  vehicleType String
+  customerId  String
+  customer    Customer  @relation(fields: [customerId], references: [id])
+  bookings    Booking[]
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  bookingRef    String        @unique
+  serviceType   ServiceType
+  packageName   String
+  scheduledAt   DateTime
+  dropOff       Boolean       @default(true)
+  status        BookingStatus @default(PENDING)
+  depositPaid   Boolean       @default(false)
+  depositAmount Decimal?
+  payhereRef    String?
+  adminNotes    String?
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  vehicleId     String
+  vehicle       Vehicle       @relation(fields: [vehicleId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  name        String
+  description String
+  price       Decimal
+  stock       Int             @default(0)
+  category    ProductCategory
+  images      String[]
+  active      Boolean         @default(true)
+  orderItems  OrderItem[]
+  createdAt   DateTime        @default(now())
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  orderRef       String      @unique
+  customerId     String
+  customer       Customer    @relation(fields: [customerId], references: [id])
+  items          OrderItem[]
+  total          Decimal
+  deliveryType   String
+  address        String?
+  paymentStatus  String      @default("PENDING")
+  payhereOrderId String?
+  createdAt      DateTime    @default(now())
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal
+}
+
+model AvailabilityBlock {
+  id          String       @id @default(cuid())
+  date        DateTime
+  slotTime    String?
+  reason      String?
+  serviceType ServiceType?
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  authorName  String
+  rating      Int
+  text        String
+  vehicleMake String?
+  source      String   @default("google")
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
