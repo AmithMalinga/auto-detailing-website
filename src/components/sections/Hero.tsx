@@ -42,13 +42,13 @@ export function Hero() {
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-10">
 
-            <button className="px-8 py-4 rounded-full bg-primary text-black uppercase tracking-[0.2em] text-sm font-medium hover:bg-primary-hover transition-all duration-500 gold-glow">
+            <a href="#booking" className="px-8 py-4 rounded-full bg-primary text-black uppercase tracking-[0.2em] text-sm font-medium hover:bg-primary-hover transition-all duration-500 gold-glow">
               Book Appointment
-            </button>
+            </a>
 
-            <button className="px-8 py-4 rounded-full border border-white/10 text-white uppercase tracking-[0.2em] text-sm hover:border-primary hover:text-primary transition-all duration-500">
+            <a href="#services" className="px-8 py-4 rounded-full border border-white/10 text-white uppercase tracking-[0.2em] text-sm hover:border-primary hover:text-primary transition-all duration-500">
               Explore Services
-            </button>
+            </a>
 
           </div>
         </motion.div>

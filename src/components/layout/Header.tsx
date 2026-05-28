@@ -41,7 +41,7 @@ export function Header() {
 
         {/* CTA */}
         <Link
-          href="/book"
+          href="/#booking"
           className="px-7 py-3 rounded-full border border-primary/30 text-sm uppercase tracking-[0.18em] text-primary hover:bg-primary hover:text-black transition-all duration-500 gold-glow"
         >
           Book Now
